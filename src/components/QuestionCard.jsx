@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
  * - Progress indicator showing current question number
  * - Category badge with Zillow blue color
  * - Question text
- * - Options display (not interactive in this phase)
+ * - Interactive buttons for answering
  * 
  * Designed to be responsive and look beautiful across all device sizes
  */
-function QuestionCard({ question, currentQuestion, totalQuestions }) {
+function QuestionCard({ question, currentQuestion, totalQuestions, onAnswer }) {
   const { category, text, type, options } = question;
 
   return (
@@ -50,60 +50,90 @@ function QuestionCard({ question, currentQuestion, totalQuestions }) {
           </h2>
         </div>
 
-        {/* Options Display (not interactive yet) */}
+        {/* Interactive Buttons */}
         <div className="mt-8 border-t border-gray-200 pt-6">
           <p className="text-sm text-gray-500 mb-4 text-center">
-            {type === 'binary' ? 'Swipe left or right' : 'Swipe in any direction'}
+            {type === 'binary' ? 'Click to choose' : 'Pick your preference'}
           </p>
           
           {type === 'binary' ? (
             <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-3 bg-gray-50 rounded-lg">
-                <div className="text-2xl mb-1">←</div>
-                <p className="text-xs text-gray-600">{options.left}</p>
-              </div>
-              <div className="text-center p-3 bg-gray-50 rounded-lg">
-                <div className="text-2xl mb-1">→</div>
-                <p className="text-xs text-gray-600">{options.right}</p>
-              </div>
+              <button
+                onClick={() => onAnswer(options.left)}
+                className="text-center p-4 bg-gray-50 rounded-lg hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-3xl mb-2">←</div>
+                <p className="text-sm font-medium">{options.left}</p>
+              </button>
+              <button
+                onClick={() => onAnswer(options.right)}
+                className="text-center p-4 bg-gray-50 rounded-lg hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-3xl mb-2">→</div>
+                <p className="text-sm font-medium">{options.right}</p>
+              </button>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-2 text-xs">
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">↖</div>
-                <p className="text-gray-600 truncate">{options.upLeft}</p>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                onClick={() => onAnswer(options.upLeft)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">↖</div>
+                <p className="text-xs font-medium truncate">{options.upLeft}</p>
+              </button>
+              <button
+                onClick={() => onAnswer(options.up)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">↑</div>
+                <p className="text-xs font-medium truncate">{options.up}</p>
+              </button>
+              <button
+                onClick={() => onAnswer(options.upRight)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">↗</div>
+                <p className="text-xs font-medium truncate">{options.upRight}</p>
+              </button>
+              <button
+                onClick={() => onAnswer(options.left)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">←</div>
+                <p className="text-xs font-medium truncate">{options.left}</p>
+              </button>
+              <div className="text-center p-3 bg-gray-50 rounded">
+                <div className="text-xl">•</div>
               </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">↑</div>
-                <p className="text-gray-600 truncate">{options.up}</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">↗</div>
-                <p className="text-gray-600 truncate">{options.upRight}</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">←</div>
-                <p className="text-gray-600 truncate">{options.left}</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg">•</div>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">→</div>
-                <p className="text-gray-600 truncate">{options.right}</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">↙</div>
-                <p className="text-gray-600 truncate">{options.downLeft}</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">↓</div>
-                <p className="text-gray-600 truncate">{options.down}</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded">
-                <div className="text-lg mb-1">↘</div>
-                <p className="text-gray-600 truncate">{options.downRight}</p>
-              </div>
+              <button
+                onClick={() => onAnswer(options.right)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">→</div>
+                <p className="text-xs font-medium truncate">{options.right}</p>
+              </button>
+              <button
+                onClick={() => onAnswer(options.downLeft)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">↙</div>
+                <p className="text-xs font-medium truncate">{options.downLeft}</p>
+              </button>
+              <button
+                onClick={() => onAnswer(options.down)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">↓</div>
+                <p className="text-xs font-medium truncate">{options.down}</p>
+              </button>
+              <button
+                onClick={() => onAnswer(options.downRight)}
+                className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
+              >
+                <div className="text-xl mb-1">↘</div>
+                <p className="text-xs font-medium truncate">{options.downRight}</p>
+              </button>
             </div>
           )}
         </div>
@@ -122,6 +152,7 @@ QuestionCard.propTypes = {
   }).isRequired,
   currentQuestion: PropTypes.number.isRequired,
   totalQuestions: PropTypes.number.isRequired,
+  onAnswer: PropTypes.func.isRequired,
 };
 
 export default QuestionCard;
