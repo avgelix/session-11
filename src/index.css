@@ -3,3 +3,24 @@
 @theme {
   --color-zillow-blue: #0074E4;
 }
+
+/* Mobile UX Enhancements */
+html, body {
+  /* Prevent overscroll bounce effect on iOS */
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  /* Prevent pull-to-refresh on mobile browsers */
+  overscroll-behavior: none;
+  /* Improve text rendering on mobile */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure minimum touch target size for accessibility (44x44px) */
+button, a, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
