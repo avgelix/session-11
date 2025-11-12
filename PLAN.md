@@ -897,7 +897,7 @@ npm install @google/generative-ai
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ],
   "env": {
-    "GEMINI_API_KEY": "@gemini-api-key"
+    "GEMINI_API_KEY": "@GEMINI_API_KEY"
   }
 }
 ```
