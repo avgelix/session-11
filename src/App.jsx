@@ -1,10 +1,19 @@
-import { useState } from 'react';
 import QuestionCard from './components/QuestionCard';
+import ResultsPage from './components/ResultsPage';
+import LoadingScreen from './components/LoadingScreen';
+import useGameState from './hooks/useGameState';
 import { questions } from '../questions';
 
 function App() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState([]);
+  const { 
+    currentQuestionIndex, 
+    answers, 
+    gamePhase, 
+    setGamePhase,
+    addAnswer, 
+    restart 
+  } = useGameState();
+
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleAnswer = (answer) => {
@@ -16,18 +25,23 @@ function App() {
       answer: answer
     };
     
-    const updatedAnswers = [...answers, newAnswer];
-    setAnswers(updatedAnswers);
-    
-    // Check if this is the last question
-    if (currentQuestionIndex === questions.length - 1) {
-      console.log('All questions completed! Final answers:', updatedAnswers);
-    } else {
-      // Move to next question
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
+    addAnswer(newAnswer);
   };
 
+  const handleLoadingComplete = () => {
+    setGamePhase('results');
+  };
+
+  // Render different screens based on game phase
+  if (gamePhase === 'loading') {
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
+  }
+
+  if (gamePhase === 'results') {
+    return <ResultsPage answers={answers} onRestart={restart} />;
+  }
+
+  // Default: Questions phase
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-8">
       <div className="w-full">
