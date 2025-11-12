@@ -1,14 +1,21 @@
-import { useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import SwipeCard from './components/SwipeCard';
 import MapBackground from './components/MapBackground';
 import ResultsPage from './components/ResultsPage';
+import LoadingScreen from './components/LoadingScreen';
+import useGameState from './hooks/useGameState';
 import { questions } from '../questions';
 
 function App() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [gamePhase, setGamePhase] = useState('questions'); // 'questions' | 'results'
+  const { 
+    currentQuestionIndex, 
+    answers, 
+    gamePhase, 
+    setGamePhase,
+    addAnswer, 
+    restart 
+  } = useGameState();
+
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleAnswer = (answer) => {
@@ -20,17 +27,11 @@ function App() {
       answer: answer
     };
     
-    const updatedAnswers = [...answers, newAnswer];
-    setAnswers(updatedAnswers);
-    
-    // Check if this is the last question
-    if (currentQuestionIndex === questions.length - 1) {
-      // All questions completed - move to results phase
-      setGamePhase('results');
-    } else {
-      // Move to next question
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
+    addAnswer(newAnswer);
+  };
+
+  const handleLoadingComplete = () => {
+    setGamePhase('results');
   };
 
   const handleAccept = () => {
@@ -40,13 +41,14 @@ function App() {
   };
 
   const handleRefuse = () => {
-    // Reset game to start over
-    setCurrentQuestionIndex(0);
-    setAnswers([]);
-    setGamePhase('questions');
+    restart();
   };
 
-  // Show results page after all questions are answered
+  // Render different screens based on game phase
+  if (gamePhase === 'loading') {
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
+  }
+
   if (gamePhase === 'results') {
     return (
       <ResultsPage 
@@ -57,7 +59,7 @@ function App() {
     );
   }
 
-  // Show question cards
+  // Default: Questions phase
   return (
     <>
       <div className="min-h-screen bg-gray-100 flex items-center justify-center py-8">
