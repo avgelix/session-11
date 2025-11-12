@@ -60,4 +60,56 @@ The game collects user preferences across multiple dimensions:
 - **Phase 2:** Neighborhood selection (unlocked after accepting city match)
 - **Feedback Loop:** Refusal allows users to explain why and replay
 
+---
+
+## 🗺️ Google Maps Setup
+
+This project uses Google Maps API to display dynamic city backgrounds that change with each question.
+
+### Getting Your API Key
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the **Maps JavaScript API**
+4. Navigate to Credentials → Create Credentials → API Key
+5. **Important:** Restrict your API key to "Maps JavaScript API" only
+
+### Local Development Setup
+
+1. Copy `.env.local` file (already created in the project)
+2. Add your API key:
+   ```
+   VITE_GOOGLE_MAPS_API_KEY=your_actual_api_key_here
+   ```
+3. Restart your dev server if it's running
+
+### Vercel/Production Setup
+
+Add the environment variable in your Vercel dashboard:
+- Variable name: `VITE_GOOGLE_MAPS_API_KEY`
+- Value: Your Google Maps API key
+
+### Free Tier Limits
+
+The map loads once per session and updates the center point when questions change. This stays well within Google Maps free tier (28,000 loads/month).
+
+**Note:** If no API key is configured, the app will work fine but won't display the map background.
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Lint code
+npm run lint
+```
 
