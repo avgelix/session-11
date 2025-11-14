@@ -1,18 +1,27 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { handleGeminiRequest } from './server/gemini-local.js'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      // Proxy API requests to production Vercel deployment in development
-      '/api': {
-        target: 'https://zillowgame.vercel.app',
-        changeOrigin: true,
-        secure: true,
+  plugins: [
+    react(),
+    // Custom plugin to handle /api/gemini locally
+    {
+      name: 'local-api',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/api/gemini') {
+            handleGeminiRequest(req, res);
+          } else {
+            next();
+          }
+        });
       }
     }
+  ],
+  server: {
+    // Remove proxy in development - use local handler instead
   },
   build: {
     // Enable code splitting for better caching
