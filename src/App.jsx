@@ -65,13 +65,15 @@ function App() {
       <MapBackground questionNumber={currentQuestionIndex} />
       <div className="min-h-screen flex items-center justify-center py-8 relative z-10">
         <div className="w-full">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-zillow-blue mb-2">
-              Where to Move Game
-            </h1>
-            <p className="text-gray-600">
-              Discover your perfect city through our card-swiping adventure
-            </p>
+          <div className="text-center mb-8 px-4">
+            <div className="inline-block backdrop-blur-md bg-white/70 rounded-2xl px-6 py-4 shadow-lg">
+              <h1 className="text-3xl md:text-4xl font-bold text-zillow-blue mb-2">
+                Where to Move Game
+              </h1>
+              <p className="text-gray-700">
+                Discover your perfect city through our card-swiping adventure
+              </p>
+            </div>
           </div>
           
           <SwipeCard 
