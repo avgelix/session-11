@@ -19,23 +19,23 @@ function SwipeIndicators({ x }) {
 
   return (
     <div className="absolute inset-0 pointer-events-none z-10">
-      {/* Left Indicator - "No" / Thumbs Down */}
+      {/* Left Indicator - "No" */}
       <motion.div
-        className="absolute left-8 top-1/2 -translate-y-1/2 text-6xl"
+        className="absolute left-8 top-1/2 -translate-y-1/2"
         style={{ opacity: leftOpacity }}
       >
-        <div className="bg-red-500 text-white rounded-full p-4 shadow-lg">
-          👎
+        <div className="bg-red-500/80 backdrop-blur-sm text-white rounded-full px-6 py-3 shadow-lg">
+          <span className="text-2xl font-bold">←</span>
         </div>
       </motion.div>
 
-      {/* Right Indicator - "Yes" / Thumbs Up */}
+      {/* Right Indicator - "Yes" */}
       <motion.div
-        className="absolute right-8 top-1/2 -translate-y-1/2 text-6xl"
+        className="absolute right-8 top-1/2 -translate-y-1/2"
         style={{ opacity: rightOpacity }}
       >
-        <div className="bg-green-500 text-white rounded-full p-4 shadow-lg">
-          👍
+        <div className="bg-green-500/80 backdrop-blur-sm text-white rounded-full px-6 py-3 shadow-lg">
+          <span className="text-2xl font-bold">→</span>
         </div>
       </motion.div>
     </div>
