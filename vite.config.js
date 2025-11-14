@@ -4,6 +4,16 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      // Proxy API requests to production Vercel deployment in development
+      '/api': {
+        target: 'https://zillowgame.vercel.app',
+        changeOrigin: true,
+        secure: true,
+      }
+    }
+  },
   build: {
     // Enable code splitting for better caching
     rollupOptions: {
