@@ -90,7 +90,7 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
       </div>
 
       {/* Card Container with Directional Hints */}
-      <div className="relative min-h-[600px] flex items-center justify-center py-12">
+      <div className="relative min-h-[550px] flex items-center justify-center py-8">
         {/* Directional Hints */}
         <DirectionalHints x={x} y={y} options={options} />
 

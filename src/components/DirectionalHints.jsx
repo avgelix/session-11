@@ -82,14 +82,14 @@ function DirectionalHints({ x, y, options }) {
 
   // Direction hint configuration with positions and arrows
   const hints = [
-    { key: 'up', label: options.up, arrow: '↑', position: 'top-0 left-1/2 -translate-x-1/2 -translate-y-full pt-4' },
-    { key: 'upRight', label: options.upRight, arrow: '↗', position: 'top-0 right-0 -translate-y-full translate-x-full pt-4 pr-4' },
-    { key: 'right', label: options.right, arrow: '→', position: 'top-1/2 right-0 translate-x-full -translate-y-1/2 pr-4' },
-    { key: 'downRight', label: options.downRight, arrow: '↘', position: 'bottom-0 right-0 translate-y-full translate-x-full pb-4 pr-4' },
-    { key: 'down', label: options.down, arrow: '↓', position: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-full pb-4' },
-    { key: 'downLeft', label: options.downLeft, arrow: '↙', position: 'bottom-0 left-0 translate-y-full -translate-x-full pb-4 pl-4' },
-    { key: 'left', label: options.left, arrow: '←', position: 'top-1/2 left-0 -translate-x-full -translate-y-1/2 pl-4' },
-    { key: 'upLeft', label: options.upLeft, arrow: '↖', position: 'top-0 left-0 -translate-y-full -translate-x-full pt-4 pl-4' }
+    { key: 'up', label: options.up, arrow: '↑', position: 'top-0 left-1/2 -translate-x-1/2 -translate-y-full pt-2' },
+    { key: 'upRight', label: options.upRight, arrow: '↗', position: 'top-0 right-0 -translate-y-full translate-x-full pt-2 pr-2' },
+    { key: 'right', label: options.right, arrow: '→', position: 'top-1/2 right-0 translate-x-full -translate-y-1/2 pr-2' },
+    { key: 'downRight', label: options.downRight, arrow: '↘', position: 'bottom-0 right-0 translate-y-full translate-x-full pb-2 pr-2' },
+    { key: 'down', label: options.down, arrow: '↓', position: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-full pb-2' },
+    { key: 'downLeft', label: options.downLeft, arrow: '↙', position: 'bottom-0 left-0 translate-y-full -translate-x-full pb-2 pl-2' },
+    { key: 'left', label: options.left, arrow: '←', position: 'top-1/2 left-0 -translate-x-full -translate-y-1/2 pl-2' },
+    { key: 'upLeft', label: options.upLeft, arrow: '↖', position: 'top-0 left-0 -translate-y-full -translate-x-full pt-2 pl-2' }
   ];
 
   return (
