@@ -68,7 +68,7 @@ function App() {
           <div className="text-center mb-8 px-4">
             <div className="inline-block backdrop-blur-md bg-white/70 rounded-2xl px-6 py-4 shadow-lg">
               <h1 className="text-3xl md:text-4xl font-bold text-zillow-blue mb-2">
-                Where to Move Game
+                Swipe City
               </h1>
               <p className="text-gray-700">
                 Discover your perfect city through our card-swiping adventure
