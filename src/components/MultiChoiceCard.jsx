@@ -2,7 +2,6 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line no-unused-vars
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import DirectionalHints from './DirectionalHints';
 import { getSwipeDirection, isValidSwipe } from '../utils/swipeDetection';
 import { triggerHaptic } from '../utils/haptics';
 
@@ -95,11 +94,8 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
       {/* Negative space where progress was */}
       <div className="mb-3 h-6"></div>
 
-      {/* Card Container with Directional Hints */}
+      {/* Card Container */}
       <div className="relative min-h-[480px] flex items-center justify-center py-4">
-        {/* Directional Hints */}
-        <DirectionalHints x={x} y={y} options={options} />
-
         {/* Swipeable Card */}
         <motion.div
           className="bg-gray-50 rounded-2xl p-6 min-h-[280px] max-w-sm w-full flex flex-col justify-between cursor-grab active:cursor-grabbing border border-gray-200"
@@ -139,23 +135,6 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 leading-relaxed">
               {text}
             </h2>
-          </div>
-
-          {/* Instruction Text */}
-          <div className="mt-6 border-t border-gray-200 pt-4">
-            <p className="text-sm text-gray-500 text-center">
-              Swipe in any direction to choose
-            </p>
-            <div className="mt-2 flex justify-center gap-2 text-xl opacity-50">
-              <span>↖</span>
-              <span>↑</span>
-              <span>↗</span>
-              <span>→</span>
-              <span>↘</span>
-              <span>↓</span>
-              <span>↙</span>
-              <span>←</span>
-            </div>
           </div>
         </motion.div>
       </div>
