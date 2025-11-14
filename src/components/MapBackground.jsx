@@ -30,8 +30,25 @@ const CITIES = [
   { name: 'Seoul', lat: 37.5665, lng: 126.9780 },
   { name: 'Melbourne', lat: -37.8136, lng: 144.9631 },
   { name: 'San Francisco', lat: 37.7749, lng: -122.4194 },
-  { name: 'Istanbul', lat: 41.0082, lng: 28.9784 }
+  { name: 'Istanbul', lat: 41.0082, lng: 28.9784 },
+  { name: 'Berlin', lat: 52.5200, lng: 13.4050 },
+  { name: 'Miami', lat: 25.7617, lng: -80.1918 },
+  { name: 'Boston', lat: 42.3601, lng: -71.0589 },
+  { name: 'Chicago', lat: 41.8781, lng: -87.6298 },
+  { name: 'Los Angeles', lat: 34.0522, lng: -118.2437 }
 ];
+
+// Find city coordinates by name (case-insensitive partial match)
+function findCityCoordinates(cityName) {
+  if (!cityName) return null;
+  const searchTerm = cityName.toLowerCase().trim();
+  const found = CITIES.find(city => 
+    city.name.toLowerCase().includes(searchTerm) || 
+    searchTerm.includes(city.name.toLowerCase())
+  );
+  console.log('🔍 Finding coordinates for:', cityName, '→', found || 'not found, using default');
+  return found || { name: cityName, lat: 40.7128, lng: -74.0060 }; // Default to NYC
+}
 
 function MapBackground({ questionNumber, city }) {
   const mapRef = useRef(null);
@@ -39,8 +56,18 @@ function MapBackground({ questionNumber, city }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
 
-  // Get city based on question number (cycles through cities) OR use provided city
-  const currentCity = city ? null : CITIES[questionNumber % CITIES.length];
+  // Get city coordinates - either from prop or cycling through list
+  const getCityLocation = () => {
+    if (city) {
+      return findCityCoordinates(city);
+    }
+    if (questionNumber !== undefined) {
+      return CITIES[questionNumber % CITIES.length];
+    }
+    return CITIES[0];
+  };
+
+  const currentCity = getCityLocation();
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -58,11 +85,11 @@ function MapBackground({ questionNumber, city }) {
 
     const initMap = () => {
       if (mapRef.current && !mapInstanceRef.current && window.google?.maps) {
-        const centerLocation = currentCity 
-          ? { lat: currentCity.lat, lng: currentCity.lng }
-          : { lat: 0, lng: 0 }; // Default if using city name
+        const centerLocation = { lat: currentCity.lat, lng: currentCity.lng };
         
-        console.log('Initializing Google Map with location:', city || currentCity?.name);
+        console.log('✅ Initializing Google Map');
+        console.log('   - Location:', currentCity.name);
+        console.log('   - Coordinates:', centerLocation);
         
         // Create new map instance (only once)
         mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
@@ -83,20 +110,7 @@ function MapBackground({ questionNumber, city }) {
           ]
         });
         setIsLoaded(true);
-        console.log('Google Map initialized successfully');
-        
-        // If we have a city name, geocode it
-        if (city && window.google?.maps?.Geocoder) {
-          const geocoder = new window.google.maps.Geocoder();
-          geocoder.geocode({ address: city }, (results, status) => {
-            if (status === 'OK' && results[0]) {
-              console.log('Geocoded', city, 'to', results[0].geometry.location);
-              mapInstanceRef.current.setCenter(results[0].geometry.location);
-            } else {
-              console.error('Geocoding failed for', city, ':', status);
-            }
-          });
-        }
+        console.log('✅ Google Map initialized successfully!');
       }
     };
 
@@ -145,24 +159,14 @@ function MapBackground({ questionNumber, city }) {
     loadGoogleMaps();
   }, []); // Only run once on mount
 
-  // Update map center when question changes (debounced via city rotation)
+  // Update map center when city changes
   useEffect(() => {
-    if (mapInstanceRef.current && isLoaded) {
-      if (city && window.google?.maps?.Geocoder) {
-        // Geocode the city name
-        const geocoder = new window.google.maps.Geocoder();
-        geocoder.geocode({ address: city }, (results, status) => {
-          if (status === 'OK' && results[0]) {
-            console.log('Moving map to', city);
-            mapInstanceRef.current.panTo(results[0].geometry.location);
-          }
-        });
-      } else if (currentCity) {
-        const newCenter = { lat: currentCity.lat, lng: currentCity.lng };
-        mapInstanceRef.current.panTo(newCenter);
-      }
+    if (mapInstanceRef.current && isLoaded && currentCity) {
+      const newCenter = { lat: currentCity.lat, lng: currentCity.lng };
+      console.log('📍 Moving map to:', currentCity.name, newCenter);
+      mapInstanceRef.current.panTo(newCenter);
     }
-  }, [currentCity, city, isLoaded]);
+  }, [currentCity, isLoaded]);
 
   // Don't render anything if there's an error or no API key
   if (error) {
