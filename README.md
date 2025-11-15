@@ -1,7 +1,7 @@
-# Where to Move Game
+# Swipe City
 
 ## 📖 Project Overview
-**What we're building:** A fun, interactive web game that helps you figure out where in the world you should live.
+**What this is:** A fun, interactive web game that helps you figure out where in the world you should live.
 
 **Why it matters:** Choosing where to move is overwhelming—there are thousands of cities across hundreds of countries. How do you know which place matches your lifestyle? This game makes it simple: just swipe through cards answering questions about your preferences (like work style, food, hobbies, and budget), and we'll match you with a city that fits you best.
 
